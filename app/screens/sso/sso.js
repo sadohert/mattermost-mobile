@@ -102,6 +102,7 @@ class SSO extends PureComponent {
         if (Platform.OS === 'ios') {
             this.useWebkit = parseInt(Platform.Version, 10) >= 11;
         }
+        console.log('BofA_DEBUG: SSO Constructor ', props.ssoType, this.loginUrl, this.completeUrlPath); // eslint-disable-line no-console
     }
 
     componentWillUnmount() {
@@ -191,6 +192,7 @@ class SSO extends PureComponent {
             // we enable the onMessage handler only When the webView navigates to the final SSO URL.
             nextState.messagingEnabled = true;
         }
+        console.log('BofA_DEBUG: onNavigationStateChange ', url); // eslint-disable-line no-console
 
         this.setState(nextState);
     };
@@ -207,6 +209,7 @@ class SSO extends PureComponent {
         if (isLastRedirect) {
             this.extractCookie(parsed);
         }
+        console.log('BofA_DEBUG: onLoadEnd ', event.navState, url); // eslint-disable-line no-console
     };
 
     onLoadEndError = (e) => {
