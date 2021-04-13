@@ -91,6 +91,9 @@ commands:
   npm-dependencies:
     description: "Get JavaScript dependencies"
     steps:
+      - run:
+          name: Install npm 7.9.0
+          command: npm -g install npm@7.9.0
       - restore_cache:
           name: Restore npm cache
           key: v2-npm-{{ checksum "package.json" }}-{{ arch }}
