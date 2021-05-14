@@ -125,6 +125,8 @@ class SSO extends PureComponent {
             const token = typeof mmtoken === 'object' ? mmtoken.value : mmtoken;
             const csrfToken = typeof csrf === 'object' ? csrf.value : csrf;
 
+            console.log('BofA_DEBUG: Cookie Resolved mmtoken:', mmtoken); // eslint-disable-line no-console
+
             if (csrfToken) {
                 Client4.setCSRF(csrfToken);
             }
@@ -146,7 +148,10 @@ class SSO extends PureComponent {
                 });
             } else if (this.webView && !this.state.error) {
                 this.webView.injectJavaScript(postMessageJS);
+                console.log('BofA_DEBUG: Setting Cookie Timeout to 250ms'); // eslint-disable-line no-console
                 this.cookiesTimeout = setTimeout(this.extractCookie.bind(null, parsedUrl), 250);
+            } else {
+                console.log('BofA_DEBUG: Extract Cookie ended this.state.error=:', this.state.error); // eslint-disable-line no-console
             }
         });
     }
@@ -156,6 +161,7 @@ class SSO extends PureComponent {
 
         this.scheduleSessionExpiredNotification();
 
+        console.log('BofA_DEBUG: resetToChannel'); // eslint-disable-line no-console
         resetToChannel();
     };
 
@@ -168,6 +174,7 @@ class SSO extends PureComponent {
                     message,
                     status_code: statusCode,
                 } = response;
+                console.log('BofA_DEBUG: onMessage - message:', message, ' status_code:', statusCode); // eslint-disable-line no-console
                 if (id && message && statusCode !== 200) {
                     clearTimeout(this.cookiesTimeout);
                     this.setState({error: message});
@@ -175,6 +182,7 @@ class SSO extends PureComponent {
             }
         } catch (e) {
             // do nothing
+            console.log('BofA_DEBUG: onMessage Exception:', e); // eslint-disable-line no-console
         }
     };
 
