@@ -196,6 +196,13 @@ class GlobalEventHandler {
         }
     };
 
+    extractCookies = () => {
+        console.log('BofA_DEBUG: global_event_handler extract cookies:'); // eslint-disable-line no-console
+        CookieManager.getAll(true).then(() => {
+            console.log('BofA_DEBUG: global_event_handler cookies extracted:'); // eslint-disable-line no-console
+        });
+    }
+
     onLogout = async () => {
         Store.redux.dispatch(closeWebSocket(false));
         Store.redux.dispatch(setServerVersion(''));
@@ -212,8 +219,15 @@ class GlobalEventHandler {
         deleteFileCache();
         resetMomentLocale();
 
+        console.log('BofA_DEBUG: global_event_handler extract cookies BEFORE clearCookies'); // eslint-disable-line no-console
+
+        await this.extractCookies();
+
         await this.clearCookiesAndWebData();
         PushNotifications.clearNotifications();
+
+        console.log('BofA_DEBUG: global_event_handler extract cookies AFTER clearCookies'); // eslint-disable-line no-console
+        await this.extractCookies();
 
         if (this.launchApp) {
             this.launchApp();

@@ -205,6 +205,13 @@ class SSO extends PureComponent {
         this.setState(nextState);
     };
 
+    onLoadStart = () => {
+        CookieManager.getAll(true).then(() => {
+            console.log('BofA_DEBUG: onLoadStart Cookie Resolved mmtoken'); // eslint-disable-line no-console
+        });
+        console.log('BofA_DEBUG: onLoadStart END '); // eslint-disable-line no-console
+    };
+
     onLoadEnd = (event) => {
         const url = event.nativeEvent.url;
         const parsed = urlParse(url);
@@ -271,6 +278,7 @@ class SSO extends PureComponent {
                     onShouldStartLoadWithRequest={() => true}
                     injectedJavaScript={jsCode}
                     onLoadEnd={this.onLoadEnd}
+                    onLoadStart={this.onLoadStart}
                     onMessage={messagingEnabled ? this.onMessage : null}
                     useSharedProcessPool={false}
                     cacheEnabled={false}
