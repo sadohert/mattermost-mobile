@@ -155,44 +155,12 @@ class GlobalEventHandler {
 
     clearCookiesAndWebData = async () => {
         try {
-            await CookieManager.clearAll(Platform.OS === 'ios');
+            await CookieManager.clearAll(true);
+            if (Platform.OS === 'ios') {
+                // on iOS we will also detele the Cookies stored by NSCookieStore
+                await CookieManager.clearAll(false);
+            }
         } catch (error) {
-            // Nothing to clear
-        }
-
-        switch (Platform.OS) {
-        case 'ios': {
-            // const mainPath = RNFetchBlob.fs.dirs.DocumentDir.split('/').slice(0, -1).join('/');
-            // const libraryDir = `${mainPath}/Library`;
-            // const cookiesDir = `${libraryDir}/Cookies`;
-            // const cookies = await RNFetchBlob.fs.exists(cookiesDir);
-            // const webkitDir = `${libraryDir}/WebKit`;
-            // const webkit = await RNFetchBlob.fs.exists(webkitDir);
-
-            // if (cookies) {
-            //     RNFetchBlob.fs.unlink(cookiesDir);
-            // }
-
-            // if (webkit) {
-            //     RNFetchBlob.fs.unlink(webkitDir);
-            // }
-            break;
-        }
-
-        case 'android': {
-            const cacheDir = RNFetchBlob.fs.dirs.CacheDir;
-            const mainPath = cacheDir.split('/').slice(0, -1).join('/');
-            const cookies = await RNFetchBlob.fs.exists(`${mainPath}/app_webview/Cookies`);
-            const cookiesJ = await RNFetchBlob.fs.exists(`${mainPath}/app_webview/Cookies-journal`);
-            if (cookies) {
-                RNFetchBlob.fs.unlink(`${mainPath}/app_webview/Cookies`);
-            }
-
-            if (cookiesJ) {
-                RNFetchBlob.fs.unlink(`${mainPath}/app_webview/Cookies-journal`);
-            }
-            break;
-        }
         }
     };
 
