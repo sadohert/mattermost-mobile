@@ -162,20 +162,20 @@ class GlobalEventHandler {
 
         switch (Platform.OS) {
         case 'ios': {
-            const mainPath = RNFetchBlob.fs.dirs.DocumentDir.split('/').slice(0, -1).join('/');
-            const libraryDir = `${mainPath}/Library`;
-            const cookiesDir = `${libraryDir}/Cookies`;
-            const cookies = await RNFetchBlob.fs.exists(cookiesDir);
-            const webkitDir = `${libraryDir}/WebKit`;
-            const webkit = await RNFetchBlob.fs.exists(webkitDir);
+            // const mainPath = RNFetchBlob.fs.dirs.DocumentDir.split('/').slice(0, -1).join('/');
+            // const libraryDir = `${mainPath}/Library`;
+            // const cookiesDir = `${libraryDir}/Cookies`;
+            // const cookies = await RNFetchBlob.fs.exists(cookiesDir);
+            // const webkitDir = `${libraryDir}/WebKit`;
+            // const webkit = await RNFetchBlob.fs.exists(webkitDir);
 
-            if (cookies) {
-                RNFetchBlob.fs.unlink(cookiesDir);
-            }
+            // if (cookies) {
+            //     RNFetchBlob.fs.unlink(cookiesDir);
+            // }
 
-            if (webkit) {
-                RNFetchBlob.fs.unlink(webkitDir);
-            }
+            // if (webkit) {
+            //     RNFetchBlob.fs.unlink(webkitDir);
+            // }
             break;
         }
 
