@@ -6,7 +6,6 @@ import AsyncStorage from '@react-native-community/async-storage';
 import CookieManager from 'react-native-cookies';
 import DeviceInfo from 'react-native-device-info';
 import {getLocales} from 'react-native-localize';
-import RNFetchBlob from 'rn-fetch-blob';
 import semver from 'semver/preload';
 
 import {setDeviceDimensions, setDeviceOrientation, setDeviceAsTablet, setStatusBarHeight} from '@actions/device';
@@ -161,6 +160,7 @@ class GlobalEventHandler {
                 await CookieManager.clearAll(false);
             }
         } catch (error) {
+            // Do nothing
         }
     };
 
