@@ -133,13 +133,16 @@ static NSString * const feedbackKey = @"com.apple.feedback.managed";
   NSDictionary *response = [[NSUserDefaults standardUserDefaults] dictionaryForKey:configurationKey];
   NSDictionary *group = [self.sharedUserDefaults dictionaryForKey:configurationKey];
   
+  NSLog(@"BofA_appconfig remoteConfigChange response=%@", response);
   if (response && ![response isEqualToDictionary:group]) {
+    NSLog(@"BofA_appconfig remoteConfigChange group=%@", group);
     // copies the managed configuration so it is accessible in the Extensions
     [self.sharedUserDefaults setObject:response forKey:configurationKey];
   }
   
   if (hasListeners) {
     @try {
+      NSLog(@"BofA_appconfig remoteConfigChange sending event=%@", response);
       [self sendEventWithName:@"managedConfigDidChange" body:response];
     } @catch (NSException *exception) {
       NSLog(@"Error sending event managedConfigDidChange to JS details=%@", exception.reason);
