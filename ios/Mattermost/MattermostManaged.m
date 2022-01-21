@@ -133,9 +133,9 @@ static NSString * const feedbackKey = @"com.apple.feedback.managed";
   NSDictionary *response = [[NSUserDefaults standardUserDefaults] dictionaryForKey:configurationKey];
   NSDictionary *group = [self.sharedUserDefaults dictionaryForKey:configurationKey];
   
-  NSLog(@"BofA_appconfig remoteConfigChange response=%@", response);
+  NSLog(@"BofA_appconfig remoteConfigChange new config=%@", response);
+  NSLog(@"BofA_appconfig remoteConfigChange original config=%@", group);
   if (response && ![response isEqualToDictionary:group]) {
-    NSLog(@"BofA_appconfig remoteConfigChange group=%@", group);
     // copies the managed configuration so it is accessible in the Extensions
     [self.sharedUserDefaults setObject:response forKey:configurationKey];
   }
@@ -154,9 +154,11 @@ RCT_EXPORT_METHOD(getConfig:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
   NSDictionary *response = [[NSUserDefaults standardUserDefaults] dictionaryForKey:configurationKey];
   if (response) {
+    NSLog(@"BofA_appconfig getConfig response=%@", response);
     resolve(response);
   }
   else {
+    NSLog(@"BofA_appconfig getConfig NO RESPONSE=%@", response);
     resolve(@{});
   }
 }
